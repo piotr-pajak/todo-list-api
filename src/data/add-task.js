@@ -1,7 +1,7 @@
-const addTaskQuery = (name) => `
+const addTaskQuery = (task) => `
 INSERT INTO tasks
 (task, isRealized)
-VALUES('${name}', false)
+VALUES('${task}', false)
 `
 
 module.exports = addTaskQuery;

@@ -14,19 +14,14 @@ class ToDoApp {
     return addTask;
   }
 
-  deleteName(name) {
-    this.names = this.names.filter((current) => current !== name);
+  async deleteTask(taskId) {
+    const deleteTask = await this.dataStore.deleteTask(taskId);
+    return deleteTask;
   }
 
-  hasName(name) {
-    return Boolean(this.names.filter((n) => n === name).length);
-  }
-
-  modifyName(oldName, newName) {
-    this.names = this.names.map((current) => {
-      const maybeUpdated = current === oldName ? newName : current;
-      return maybeUpdated;
-    });
+  async modifyTask(taskId, newTask) {
+    const modifyTask = await this.dataStore.modifyTask(taskId, newTask);
+    return modifyTask;
   }
 }
 

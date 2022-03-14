@@ -1,7 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const mysql = require("mysql");
-const cors = require('cors')
+const cors = require("cors");
 const { dbConfig } = require("./config");
 const ToDoApp = require("./src/app");
 const ToDoData = require("./src/data/ToDoData");
@@ -9,7 +9,7 @@ const ToDoData = require("./src/data/ToDoData");
 const app = express();
 const port = 3000;
 
-app.use(cors())
+app.use(cors());
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -23,19 +23,13 @@ dbConn.connect(function (err) {
 const toDoData = new ToDoData(dbConn);
 const toDoApp = new ToDoApp([], toDoData);
 
-app.get("/all", async (req, res) => {
+app.get("/tasks", async (req, res) => {
   try {
     const allNames = await toDoApp.getAllTasks();
     res.json({ data: allNames }).status(200);
   } catch (err) {
     res.json({ data: [], error: "Something went wrong..." }).status(500);
   }
-});
-
-app.get("/check/:name", (req, res) => {
-  const name = req.params.name;
-  const hasName = toDoApp.hasName(name);
-  res.json({ data: { hasName } });
 });
 
 app.post("/task", async (req, res) => {
@@ -48,16 +42,25 @@ app.post("/task", async (req, res) => {
   }
 });
 
-app.delete("/name", (req, res) => {
-  const name = req.body.name;
-  toDoApp.deleteName(name);
-  res.json({ succes: true }).status(200);
+app.delete("/task", async (req, res) => {
+  const taskId = req.body;
+  try {
+    const deleteTask = await toDoApp.deleteTask(taskId);
+    res.json({ succes: true, info: deleteTask }).status(200);
+  } catch (err) {
+    res.json({ data: [], error: "Something went wrong..." }).status(500);
+  }
 });
-app.patch("/name", (req, res) => {
-  const oldName = req.body.oldName;
-  const newName = req.body.newName;
-  toDoApp.modifyName(oldName, newName);
-  res.json({ succes: true }).status(200);
+
+app.patch("/task", async (req, res) => {
+  const taskId = req.body.taskId;
+  const newTask = req.body.newTask;
+  try {
+    const modifyTask = await toDoApp.modifyTask(taskId, newTask);
+    res.json({ succes: true, info: modifyTask }).status(200);
+  } catch (err) {
+    res.json({ data: [], error: "Something went wrong..." }).status(500);
+  }
 });
 
 app.get("*", (req, res) => {
