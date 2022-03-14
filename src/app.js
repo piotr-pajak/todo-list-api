@@ -1,14 +1,17 @@
 class ToDoApp {
-  constructor(names = []) {
+  constructor(names = [], dataStore) {
     this.names = [...names];
+    this.dataStore = dataStore;
   }
 
-  getNames() {
-    return this.names;
+  async getAllTasks() {
+    const allTasks = await this.dataStore.getAllTasks();
+    return allTasks;
   }
 
-  setName(name) {
-    this.names.push(name);
+  async addTask(task) {
+    const addTask = await this.dataStore.addNewTask(task);
+    return addTask;
   }
 
   deleteName(name) {
@@ -16,7 +19,7 @@ class ToDoApp {
   }
 
   hasName(name) {
-    return Boolean(this.names.filter((n) => n === name).length)
+    return Boolean(this.names.filter((n) => n === name).length);
   }
 
   modifyName(oldName, newName) {
