@@ -1,8 +1,9 @@
 const getNamesQuery = require("./get-names");
 const addTaskQuery = require("./add-task");
 const deleteTaskQuery = require("./delete-task");
-const modifyTask = require("./modify-task");
-
+const modifyTaskQuery = require("./modify-task");
+const markRealizedQuery = require("./mark-realized");
+const revertRealizedQuery = require("./revert-realized");
 class ToDoData {
   constructor(dbConn) {
     this.dbConn = dbConn;
@@ -47,7 +48,7 @@ class ToDoData {
   }
   modifyTask(taskId, newTask) {
     return new Promise((resolve, reject) => {
-      this.dbConn.query(modifyTask(taskId, newTask), (err, results, fields) => {
+      this.dbConn.query(modifyTaskQuery(taskId, newTask), (err, results, fields) => {
         if (err) {
           reject(err);
         } else {
@@ -55,6 +56,28 @@ class ToDoData {
         }
       });
     });
+  }
+  markRealized(taskId){
+    return new Promise((resolve, reject) => {
+      this.dbConn.query(markRealizedQuery(taskId), (err,results,fields) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(results);
+        }
+      })
+    })
+  }
+  revertRealized(taskId){
+    return new Promise((resolve, reject) => {
+      this.dbConn.query(revertRealizedQuery(taskId), (err,results,fields) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(results);
+        }
+      })
+    })
   }
 }
 module.exports = ToDoData;

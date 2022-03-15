@@ -63,7 +63,27 @@ app.patch("/task", async (req, res) => {
   }
 });
 
-app.get("*", (req, res) => {
+app.patch("/realized", async (req, res) => {
+  const taskId = req.body.taskId;
+  try {
+    const markRealized = await toDoApp.markRealized(taskId);
+    res.json({ succes: true, info: markRealized }).status(200);
+  } catch (err) {
+    res.json({ data: [], error: "Something went wrong..." }).status(500);
+  }
+});
+
+app.patch("/revert", async (req, res) => {
+  const taskId = req.body.taskId;
+  try {
+    const revertRealized = await toDoApp.revertRealized(taskId);
+    res.json({ succes: true, info: revertRealized }).status(200);
+  } catch (err) {
+    res.json({ data: [], error: "Something went wrong..." }).status(500);
+  }
+});
+
+app.get("/*", (req, res) => {
   res.send({ error: "Nie ma takiej metody!", data: {} });
 });
 

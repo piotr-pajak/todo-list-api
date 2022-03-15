@@ -23,6 +23,14 @@ class ToDoApp {
     const modifyTask = await this.dataStore.modifyTask(taskId, newTask);
     return modifyTask;
   }
+  async markRealized(taskId){
+    const markRealized = await this.dataStore.markRealized(taskId);
+    return markRealized
+  }
+  async revertRealized(taskId){
+    const revertRealized = await this.dataStore.revertRealized(taskId);
+    return revertRealized
+  }
 }
 
 module.exports = ToDoApp;
