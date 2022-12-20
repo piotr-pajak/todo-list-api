@@ -30,17 +30,17 @@ export const createTodo = async (
     req: Request,
     res: Response
 ) => {
-    const { todo, iscomplete } = req.body;
-    const response: QueryResult = await pool.query("INSERT INTO todos (todo, iscomplete) VALUES ($1, $2)", [todo, iscomplete]);
+    const { todo, isComplete } = req.body;
+    const response: QueryResult = await pool.query("INSERT INTO todos (todo, isComplete) VALUES ($1, $2)", [todo, isComplete]);
     res.json({
         message: "ToDo created successfully",
         body: {
-            todo: { todo, iscomplete }
+            todo: { todo, isComplete }
         }
     })
 }
 
-export const updateTodo = async (
+export const editTodo = async (
     req: Request,
     res: Response
 ) => {
@@ -51,19 +51,19 @@ export const updateTodo = async (
         todo,
         id
     ]);
-    res.json("ToDo updated successfully");
+    res.json("ToDo edited successfully");
 }
 
-export const setComplete = async (
+export const setFinished = async (
     req: Request,
     res: Response
 ) => {
     const id = Number(req.params.id);
 
-    const response: QueryResult = await pool.query("UPDATE todos SET iscomplete = true WHERE id = $1", [
+    const response: QueryResult = await pool.query("UPDATE todos SET isComplete = true WHERE id = $1", [
         id
     ]);
-    res.json("ToDo is complete");
+    res.json("ToDo is finished");
 }
 
 export const setUnfinished = async (
@@ -72,11 +72,12 @@ export const setUnfinished = async (
 ) => {
     const id = Number(req.params.id);
 
-    const response: QueryResult = await pool.query("UPDATE todos SET iscomplete = false WHERE id = $1", [
+    const response: QueryResult = await pool.query("UPDATE todos SET isComplete = false WHERE id = $1", [
         id
     ]);
-    res.json("ToDo is not complete");
+    res.json("ToDo is not finished");
 }
+
 export const deleteTodo = async (
     req: Request,
     res: Response

@@ -1,12 +1,11 @@
 import { Router } from "express";
 import {
-    createTodo,
-    deleteTodo,
+    createTodo, deleteTodo,
+    editTodo,
     getTodoById,
     getTodos,
-    setComplete,
+    setFinished,
     setUnfinished,
-    updateTodo
 } from "../controllers/index.controller";
 
 const router = Router();
@@ -14,8 +13,8 @@ const router = Router();
 router.get("/todos", getTodos);
 router.get("/todos/:id", getTodoById);
 router.post("/todos", createTodo);
-router.put("/todos/:id", updateTodo);
-router.put("/todos/setcomplete/:id", setComplete);
-router.put("/todos/setunfinished/:id", setUnfinished);
+router.put("/todos/:id", editTodo);
+router.put("/todos/setFinished/:id", setFinished);
+router.put("/todos/setUnfinished/:id", setUnfinished);
 router.delete("/todos/:id", deleteTodo);
 export default router;
