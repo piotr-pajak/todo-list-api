@@ -42,14 +42,14 @@ Tech: Node.js, Express.js, TypeScript, PostgreSQL
   CREATE TABLE todos (
     id SERIAL PRIMARY KEY,
     todo VARCHAR(255),
-    isComplete boolean
+    finished boolean
   );
 ```
 
 5. Insert data to our table:
 
 ```bash
-  INSERT INTO todos (todo, isComplete)
+  INSERT INTO todos (todo, finished)
     VALUES ('sample todo content', false),
     ('second sample todo content', false),
     ('third sample todo content', false);
