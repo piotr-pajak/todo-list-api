@@ -1,6 +1,7 @@
 import { Router } from "express";
 import {
-    createTodo, deleteTodo,
+    createTodo,
+    deleteTodo,
     editTodo,
     getTodoById,
     getTodos,
