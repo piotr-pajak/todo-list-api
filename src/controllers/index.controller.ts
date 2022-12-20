@@ -30,12 +30,12 @@ export const createTodo = async (
     req: Request,
     res: Response
 ) => {
-    const { todo, finished } = req.body;
-    const response: QueryResult = await pool.query("INSERT INTO todos (todo, finished) VALUES ($1, $2)", [todo, finished]);
+    const { todo } = req.body;
+    const response: QueryResult = await pool.query("INSERT INTO todos (todo, finished) VALUES ($1, false)", [todo]);
     res.json({
         message: "ToDo created successfully",
         body: {
-            todo: { todo, finished }
+            todo: { todo }
         }
     })
 }
