@@ -1,5 +1,5 @@
 # todo-list-api
-Tech: Node.js, Express.js, TypeScript, PostgreSQL
+Node.js, Express.js, TypeScript, PostgreSQL - ToDo List API for my [ToDo List Client](https://github.com/mGlok/todo-list-client)
 
 ## How to install:
 
