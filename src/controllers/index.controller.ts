@@ -13,6 +13,7 @@ export const getTodos = async (
         return res.status(500).json("Internal Server Error");
     }
 };
+
 export const getTodoById = async (
     req: Request,
     res: Response
@@ -54,28 +55,17 @@ export const editTodo = async (
     res.json("ToDo edited successfully");
 }
 
-export const setFinished = async (
+export const toggleFinishedValue = async (
     req: Request,
     res: Response
 ) => {
     const id = Number(req.params.id);
-
-    const response: QueryResult = await pool.query("UPDATE todos SET finished = true WHERE id = $1", [
+    const { finished }: { finished: boolean } = req.body;
+    const response: QueryResult = await pool.query("UPDATE todos SET finished = $1 WHERE id = $2", [
+        finished,
         id
     ]);
-    res.json("ToDo is finished");
-}
-
-export const setUnfinished = async (
-    req: Request,
-    res: Response
-) => {
-    const id = Number(req.params.id);
-
-    const response: QueryResult = await pool.query("UPDATE todos SET finished = false WHERE id = $1", [
-        id
-    ]);
-    res.json("ToDo is not finished");
+    res.json(`ToDo finished value has been changed to ${!finished}`);
 }
 
 export const deleteTodo = async (
