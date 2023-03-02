@@ -54,4 +54,4 @@ INSERT INTO todos (todo, finished)
   
 If you have any questions or suggestions for the project, feel free to get in touch with me.
 
-Thank you for using the ToDo List Client!
+Thank you for using my ToDo List Client and ToDo List API!
